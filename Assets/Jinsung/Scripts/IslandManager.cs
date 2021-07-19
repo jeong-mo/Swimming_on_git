@@ -10,6 +10,7 @@ public class IslandManager : MonoBehaviour
 {
     [SerializeField] Island[] islands;  // 화면에 보이는 섬 리스트
     [SerializeField] Transform main;    // 메인 카메라 트랜스폼
+    [SerializeField] GameObject back;   // 뒤로 가기 버튼
 
     private Vector3 initPosition;   // 카메라 처음 위치
     private Vector3 initRotation;   // 카메라 처음 각도
@@ -30,6 +31,9 @@ public class IslandManager : MonoBehaviour
         // 섬 이벤트 추가
         foreach (Island island in islands)
             island.setTarget += SetIsland;
+        
+        // 뒤로 가기 버튼 숨기기
+        back.SetActive(false);
     }
 
     // 설정 초기화
@@ -37,16 +41,28 @@ public class IslandManager : MonoBehaviour
     {
         targetPosition = initPosition;
         targetRotation = initRotation;
+
+        // 섬의 위치 조정
+        foreach (Island island in islands)
+            island.MoveIsland(false);
+        
+        back.SetActive(false);
     }
 
     // 특정 섬 설정
     public void SetIsland(Island selected)
     {
+        // 해당 섬이 아니면 섬 가라 앉음
         foreach (Island island in islands)
-            island.gameObject.SetActive(island == selected);
-
+        {
+            if (island != selected)
+                island.MoveIsland(true);
+        }
+        
         targetPosition = selected.target;
         targetRotation.Set(0, 0, 0);
+
+        back.SetActive(true);
     }
 
     private void FixedUpdate()
