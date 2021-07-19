@@ -9,22 +9,22 @@ using UnityEngine;
 public class Island : MonoBehaviour
 {
     // 섬 목표 설정
-    public delegate void SetTarget(Vector3 position);
+    public delegate void SetTarget(Island selected);
     public SetTarget setTarget;
 
     // 섬 전용 카메라 위치
-    private Vector3 target;
+    [HideInInspector] public Vector3 target;
 
     private void Start()
     {
         target.x = transform.position.x;
         target.y = transform.position.y;
-        target.z = transform.position.z - 10;
+        target.z = transform.position.z - 100;
     }
 
     // 섬 클릭 시 이벤트 실행
     public void OnMouseDown()
     {
-        setTarget(target);
+        setTarget(this);
     }
 }

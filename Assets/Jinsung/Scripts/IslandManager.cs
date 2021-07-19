@@ -40,16 +40,19 @@ public class IslandManager : MonoBehaviour
     }
 
     // 특정 섬 설정
-    public void SetIsland(Vector3 position)
+    public void SetIsland(Island selected)
     {
-        targetPosition = position;
+        foreach (Island island in islands)
+            island.gameObject.SetActive(island == selected);
+
+        targetPosition = selected.target;
         targetRotation.Set(0, 0, 0);
     }
 
     private void FixedUpdate()
     {
         // 목표 위치 및 각도로 이동
-        main.position = Vector3.Lerp(main.position, targetPosition, Time.deltaTime * 2f);
-        main.rotation = Quaternion.Euler(Vector3.Lerp(main.rotation.eulerAngles, targetRotation, Time.deltaTime * 2f));
+        main.position = Vector3.Lerp(main.position, targetPosition, Time.deltaTime);
+        main.rotation = Quaternion.Euler(Vector3.Lerp(main.rotation.eulerAngles, targetRotation, Time.deltaTime));
     }
 }
