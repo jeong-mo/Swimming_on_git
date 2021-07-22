@@ -12,15 +12,17 @@ public class Island : MonoBehaviour
     public delegate void SetTarget(Island selected);
     public SetTarget setTarget;
 
+    public TextMesh title;  // 브랜치 이름 표시
+
     [HideInInspector] public Vector3 initPosition;      // 섬의 현재 위치
     [HideInInspector] public Vector3 targetPosition;    // 섬의 목표 위치
     [HideInInspector] public Vector3 target;            // 섬 전용 카메라 위치
-
+    
     private void Start()
     {
         target.x = transform.position.x;
         target.y = transform.position.y;
-        target.z = transform.position.z - 100;
+        target.z = transform.position.z - 300;
 
         // 현재 및 목표 위치 설정
         initPosition = transform.position;
@@ -44,7 +46,7 @@ public class Island : MonoBehaviour
     private IEnumerator Move(bool fall)
     {
         // 섬이 아래로 이동
-        if(fall)
+        if (fall)
         {
             while(transform.position.y > targetPosition.y)
             {
@@ -64,6 +66,10 @@ public class Island : MonoBehaviour
             }
 
             transform.position = initPosition;
+
+            // 섬 이름 표시
+            yield return new WaitForSeconds(3f);
+            title.gameObject.SetActive(true);
         }
 
         yield return null;

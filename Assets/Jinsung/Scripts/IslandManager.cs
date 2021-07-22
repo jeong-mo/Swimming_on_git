@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct Information
+{
+    public string title;
+}
+
 /// <summary>
 /// 섬 목록 관리
 /// (작성자 : 곽진성)
 /// </summary>
 public class IslandManager : MonoBehaviour
 {
-    [SerializeField] Island[] islands;  // 화면에 보이는 섬 리스트
     [SerializeField] Transform main;    // 메인 카메라 트랜스폼
     [SerializeField] GameObject back;   // 뒤로 가기 버튼
 
@@ -17,6 +22,14 @@ public class IslandManager : MonoBehaviour
 
     private Vector3 targetPosition; // 카메라 이동 위치
     private Vector3 targetRotation; // 카메라 변환 각도
+
+    
+    [SerializeField] Information[] informations;    // 섬 정보 리스트
+    [SerializeField] GameObject islandPrefab;       // 섬 오브젝트 프리팹
+    [SerializeField] float distance;           // 섬 사이의 거리
+    [SerializeField] Transform start;               // 섬 시작 위치
+
+    private List<Island> islands;   // 화면에 보이는 섬 리스트
 
     private void Start()
     {
@@ -28,10 +41,44 @@ public class IslandManager : MonoBehaviour
         targetPosition = initPosition;
         targetRotation = initRotation;
 
+        islands = new List<Island>();
+
+        // 섬 스크립트 불러옴
+        for(int i = 0; i < informations.Length; i++)
+        {
+            GameObject newIsland = Instantiate(islandPrefab);
+            //newIsland.transform.position = islandPrefab.transform.position;
+            //newIsland.transform.rotation = islandPrefab.transform.rotation;
+            //newIsland.transform.localScale = islandPrefab.transform.localScale;
+
+            // 섬 정보 적용
+            Island newInformation = newIsland.GetComponent<Island>();
+            newInformation.title.text = informations[i].title;
+            islands.Add(newInformation);
+        }
+
         // 섬 이벤트 추가
         foreach (Island island in islands)
             island.setTarget += SetIsland;
-        
+
+        // 첫 섬은 중앙에 위치
+        islands[0].transform.position = start.transform.position;
+        islands[0].transform.localScale.Set(1, 1, 1);
+
+        // 섬 위치 조정
+        float degree = 360f / (islands.Count - 1);
+        Debug.Log(degree);
+        for(int i = 0; i < islands.Count - 1; i++)
+        {
+            Debug.Log(degree * i);
+            Debug.Log(Mathf.Cos(degree * i));
+            Debug.Log(Mathf.Sin(degree * i));
+
+            // Y는 임시로 설정
+            islands[i + 1].transform.position = new Vector3(start.transform.position.x + (Mathf.Cos(Mathf.Deg2Rad * (degree * i)) * distance), -13, start.transform.position.z + (Mathf.Sin(Mathf.Deg2Rad * (degree * i)) * distance));
+            islands[i + 1].transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        }
+
         // 뒤로 가기 버튼 숨기기
         back.SetActive(false);
     }
@@ -45,7 +92,7 @@ public class IslandManager : MonoBehaviour
         // 섬의 위치 조정
         foreach (Island island in islands)
             island.MoveIsland(false);
-        
+    
         back.SetActive(false);
     }
 
@@ -55,6 +102,9 @@ public class IslandManager : MonoBehaviour
         // 해당 섬이 아니면 섬 가라 앉음
         foreach (Island island in islands)
         {
+            // 섬 이름 숨김
+            island.title.gameObject.SetActive(false);
+
             if (island != selected)
                 island.MoveIsland(true);
         }
