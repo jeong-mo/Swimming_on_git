@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
 using System.IO;
+using System;
+using System.Text;
+using System.Threading;
+using System.ComponentModel;
+
 
 public class IslandEngine
 {
@@ -13,6 +18,8 @@ public class IslandEngine
     StreamReader reader;
 
 
+    // 비동기 아웃풋 받아오기
+    private static StringBuilder output;
 
     private void startInfo()
     {
@@ -20,7 +27,7 @@ public class IslandEngine
         processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
         // git 설치 시에 같이 설치되는 bash 위치
-        processStartInfo.FileName= @"C:\Program Files (x86)\Git\bin\bash.exe";
+        processStartInfo.FileName = @"C:\Program Files (x86)\Git\bin\bash.exe";
 
 
         // 프로세스 시작할 때 운영체제 셸을 사용할지 여부
@@ -33,30 +40,54 @@ public class IslandEngine
         processStartInfo.RedirectStandardInput = true;
         processStartInfo.RedirectStandardOutput = true;
 
-        // input output 처리
-        writer = process.StandardInput;
-        reader = process.StandardOutput;
+    
 
         // TODO :: error 처리
     }
 
 
-    public void Input(string s)
+
+    // https://docs.microsoft.com/ko-kr/dotnet/api/system.diagnostics.process.beginoutputreadline?view=net-5.0#System_Diagnostics_Process_BeginOutputReadLine
+    // 여기서 긁어온거라 잘 모름
+    private static void OutputHandler(object sendingProcess,
+            DataReceivedEventArgs outLine)
     {
-        writer.WriteLine(s);
+        // Collect the sort command output.
+        if (!String.IsNullOrEmpty(outLine.Data))
+        {
+            // Add the text to the collected output.
+            output.Append(Environment.NewLine + outLine.Data);
+        }
     }
 
-    public string output()
+
+    public void Input(string s)
+    {
+
+        UnityEngine.Debug.Log(s);
+        writer.WriteLine(s);
+
+        // 비동기 아웃풋 읽기 시작
+        process.BeginErrorReadLine();
+    }
+
+    public string engineOutput()
     {
         string s;
         s = reader.ReadToEnd();
         return s;
+
     }
 
     // working directory 설정
     public void setting()
     {
         processStartInfo.WorkingDirectory = @"C:/";
+        process.StartInfo = processStartInfo;
+
+        // 비동기 아웃풋 세팅
+        output = new StringBuilder();
+        process.OutputDataReceived += OutputHandler;
     }
 
 
@@ -64,46 +95,56 @@ public class IslandEngine
     {
         // 기본 startInfo
         startInfo();
+        UnityEngine.Debug.Log("startinfo");
         // working directory 설정
         setting();
+        UnityEngine.Debug.Log("setting");
+        process.Start();
+        UnityEngine.Debug.Log("Start");
+
+        // input output 처리
+        writer = process.StandardInput;
+        reader = process.StandardOutput;
     }
 
     public void downEngine()
     {
-        // 비동기로 읽는 방법이 있다네요~.
-
+        // 종료 시퀸스
+        writer.Close();
+        writer.WriteLine("exit");
+        process.WaitForExit();
     }
 
 
-    public    void test()
-    {
-        Process process = new Process();
+    //public void test()
+    //{
+    //    Process process = new Process();
 
-        ProcessStartInfo processStartInfo = new ProcessStartInfo();
-        processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-        processStartInfo.FileName = @"C:\Program Files (x86)\Git\bin\bash.exe";
-        processStartInfo.WorkingDirectory = @"C:/";
-        //processStartInfo.Arguments = "dir";
-        processStartInfo.RedirectStandardInput = true;
-        processStartInfo.RedirectStandardOutput = true;
-        processStartInfo.RedirectStandardError = true;
-        processStartInfo.UseShellExecute = false;
+    //    ProcessStartInfo processStartInfo = new ProcessStartInfo();
+    //    processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+    //    processStartInfo.FileName = @"C:\Program Files (x86)\Git\bin\bash.exe";
+    //    processStartInfo.WorkingDirectory = @"C:/";
+    //    //processStartInfo.Arguments = "dir";
+    //    processStartInfo.RedirectStandardInput = true;
+    //    processStartInfo.RedirectStandardOutput = true;
+    //    processStartInfo.RedirectStandardError = true;    
+    //    processStartInfo.UseShellExecute = false;
 
-        process.StartInfo = processStartInfo;
-        process.Start();
+    //    process.StartInfo = processStartInfo;
+    //    process.Start();
 
-        StreamWriter mySW = process.StandardInput;
-        StreamReader mySR = process.StandardOutput;
+    //    StreamWriter mySW = process.StandardInput;
+    //    StreamReader mySR = process.StandardOutput;
 
-        mySW.WriteLine("dir");
-        mySW.WriteLine("exit");
-        string output = mySR.ReadToEnd();
-        string error = process.StandardError.ReadToEnd();
+    //    mySW.WriteLine("dir");
+    //    mySW.WriteLine("exit");
+    //    string output = mySR.ReadToEnd();
+    //    string error = process.StandardError.ReadToEnd();
 
-        UnityEngine.Debug.Log("output" + output.ToString());
+    //    UnityEngine.Debug.Log("output" + output.ToString());
 
-        UnityEngine.Debug.Log(error);
-        //ViewBag.Error = error;
-        //ViewBag.Ouput = output;
-    }
+    //    UnityEngine.Debug.Log(error);
+    //    //ViewBag.Error = error;
+    //    //ViewBag.Ouput = output;
+    //}
 }
