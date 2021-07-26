@@ -70,10 +70,6 @@ public class IslandManager : MonoBehaviour
         Debug.Log(degree);
         for(int i = 0; i < islands.Count - 1; i++)
         {
-            Debug.Log(degree * i);
-            Debug.Log(Mathf.Cos(degree * i));
-            Debug.Log(Mathf.Sin(degree * i));
-
             // Y는 임시로 설정
             islands[i + 1].transform.position = new Vector3(start.transform.position.x + (Mathf.Cos(Mathf.Deg2Rad * (degree * i)) * distance), -13, start.transform.position.z + (Mathf.Sin(Mathf.Deg2Rad * (degree * i)) * distance));
             islands[i + 1].transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
