@@ -843,15 +843,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   main: {fileID: 963194228}
+  mainCamera: {fileID: 963194227}
   back: {fileID: 878553344}
+  initSize: 80
+  finalSize: 30
   informations:
   - title: Master
+    people: 5
   - title: Branch1
+    people: 3
   - title: Branch2
+    people: 2
   - title: Branch3
+    people: 7
   - title: Branch4
+    people: 4
   - title: Branch5
+    people: 3
   - title: Branch6
+    people: 2
   islandPrefab: {fileID: 4880629842233302847, guid: 063a5ac1903fd904e8eca64d5e2a2297,
     type: 3}
   distance: 90
