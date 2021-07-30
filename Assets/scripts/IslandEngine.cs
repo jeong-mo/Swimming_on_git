@@ -11,140 +11,100 @@ using System.ComponentModel;
 
 public class IslandEngine
 {
+    public static StringBuilder outputString = null;
 
-    private Process process = new Process();
-    private ProcessStartInfo processStartInfo = new ProcessStartInfo();
-    StreamWriter writer;
-    StreamReader reader;
+    private Process bash = new Process();
+    private ProcessStartInfo bashInfo = new ProcessStartInfo();
+
+    private StreamWriter writer;
 
 
-    // 비동기 아웃풋 받아오기
-    private static StringBuilder output;
-
-    private void startInfo()
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="s"></param>
+    public void SetFileName(string s)
     {
-        // 프로세스 시작시 사용할 창 상태 설정 hidden
-        processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+        bashInfo.FileName = s;
+        bash.StartInfo = bashInfo;
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    private void SetInfo()
+    {
+        bashInfo.FileName = "C:\\Program Files (x86)\\Git\\bin\\bash.exe";
+        bashInfo.UseShellExecute = false;
 
-        // git 설치 시에 같이 설치되는 bash 위치
-        processStartInfo.FileName = @"C:\Program Files (x86)\Git\bin\bash.exe";
+        bashInfo.RedirectStandardOutput = true;
+        outputString = new StringBuilder();
 
 
-        // 프로세스 시작할 때 운영체제 셸을 사용할지 여부
-        // 해당 옵션이 false여야지 리다이렉트 가능
-        // false로 설정되어있지않으면 working directory도 exe파일 위치로 고정됨
-        processStartInfo.UseShellExecute = false;
+        bashInfo.RedirectStandardInput = true;
 
-        // 에러 인풋 아웃풋 리다이렉트
-        processStartInfo.RedirectStandardError = true;
-        processStartInfo.RedirectStandardInput = true;
-        processStartInfo.RedirectStandardOutput = true;
+        bash.StartInfo = bashInfo;
+        bash.OutputDataReceived += OutputHandler;
 
-    
+    }
 
-        // TODO :: error 처리
+    /// <summary>
+    /// 
+    /// </summary>
+    public void StartEngine()
+    {
+        SetInfo();
+        bash.Start();
+        bash.BeginOutputReadLine();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="input"></param>
+    public void WriteInput(string input)
+    {
+        writer = bash.StandardInput;
+        writer.WriteLine(input);
+        writer.Close();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public StringBuilder ReadOutput()
+    {
+        // 이거 호출이 너무 빨라서 아무것도 없는게 감
+        return outputString;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void StopEngine()
+    {
+        bash.Close();
     }
 
 
-
-    // https://docs.microsoft.com/ko-kr/dotnet/api/system.diagnostics.process.beginoutputreadline?view=net-5.0#System_Diagnostics_Process_BeginOutputReadLine
-    // 여기서 긁어온거라 잘 모름
-    private static void OutputHandler(object sendingProcess,
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sendingProcess"></param>
+    /// <param name="outLine"></param>
+    private void OutputHandler(object sendingProcess,
             DataReceivedEventArgs outLine)
     {
+
         // Collect the sort command output.
         if (!String.IsNullOrEmpty(outLine.Data))
         {
             // Add the text to the collected output.
-            output.Append(Environment.NewLine + outLine.Data);
+            outputString.Append(outLine.Data);
+
+            // test
+            UnityEngine.Debug.Log(outLine.Data);
         }
     }
 
-
-    public void Input(string s)
-    {
-
-        UnityEngine.Debug.Log(s);
-        writer.WriteLine(s);
-
-        // 비동기 아웃풋 읽기 시작
-        process.BeginErrorReadLine();
-    }
-
-    public string engineOutput()
-    {
-        string s;
-        s = reader.ReadToEnd();
-        return s;
-
-    }
-
-    // working directory 설정
-    public void setting()
-    {
-        processStartInfo.WorkingDirectory = @"C:/";
-        process.StartInfo = processStartInfo;
-
-        // 비동기 아웃풋 세팅
-        output = new StringBuilder();
-        process.OutputDataReceived += OutputHandler;
-    }
-
-
-    public void startEngine()
-    {
-        // 기본 startInfo
-        startInfo();
-        UnityEngine.Debug.Log("startinfo");
-        // working directory 설정
-        setting();
-        UnityEngine.Debug.Log("setting");
-        process.Start();
-        UnityEngine.Debug.Log("Start");
-
-        // input output 처리
-        writer = process.StandardInput;
-        reader = process.StandardOutput;
-    }
-
-    public void downEngine()
-    {
-        // 종료 시퀸스
-        writer.Close();
-        writer.WriteLine("exit");
-        process.WaitForExit();
-    }
-
-
-    //public void test()
-    //{
-    //    Process process = new Process();
-
-    //    ProcessStartInfo processStartInfo = new ProcessStartInfo();
-    //    processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-    //    processStartInfo.FileName = @"C:\Program Files (x86)\Git\bin\bash.exe";
-    //    processStartInfo.WorkingDirectory = @"C:/";
-    //    //processStartInfo.Arguments = "dir";
-    //    processStartInfo.RedirectStandardInput = true;
-    //    processStartInfo.RedirectStandardOutput = true;
-    //    processStartInfo.RedirectStandardError = true;    
-    //    processStartInfo.UseShellExecute = false;
-
-    //    process.StartInfo = processStartInfo;
-    //    process.Start();
-
-    //    StreamWriter mySW = process.StandardInput;
-    //    StreamReader mySR = process.StandardOutput;
-
-    //    mySW.WriteLine("dir");
-    //    mySW.WriteLine("exit");
-    //    string output = mySR.ReadToEnd();
-    //    string error = process.StandardError.ReadToEnd();
-
-    //    UnityEngine.Debug.Log("output" + output.ToString());
-
-    //    UnityEngine.Debug.Log(error);
-    //    //ViewBag.Error = error;
-    //    //ViewBag.Ouput = output;
-    //}
 }

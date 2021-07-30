@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class test : MonoBehaviour
@@ -13,20 +14,23 @@ public class test : MonoBehaviour
         tmp = new IslandEngine();
 
         UnityEngine.Debug.Log("start");
-        tmp.startEngine();
+
+        tmp.StartEngine();
+
+
         UnityEngine.Debug.Log("startdone");
-        tmp.Input("git --help");
+        tmp.WriteInput("git --help");
 
-        string s = tmp.engineOutput();
-        UnityEngine.Debug.Log(s);
-
+        StringBuilder s = tmp.ReadOutput();
 
 
-        tmp.downEngine();
+        UnityEngine.Debug.Log(s.Length);
+        UnityEngine.Debug.Log(s.ToString());
+
     }
 
     // Update is called once per frame
     void Update()
-    { 
+    {
     }
 }
