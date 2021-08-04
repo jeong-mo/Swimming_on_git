@@ -39,8 +39,12 @@ public class InputManager : MonoBehaviour
         output.text += '\n';
         output.text += input.text;
 
+        CMDworker.input(input.text);
+
         // 입력 텍스트 초기화
         input.text = "";
+
+        output.text += CMDworker.output();
 
         // 스크롤 위치 아래로 세팅
         Canvas.ForceUpdateCanvases();

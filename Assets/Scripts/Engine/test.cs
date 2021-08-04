@@ -13,19 +13,18 @@ public class test : MonoBehaviour
     {
         tmp = new IslandEngine();
 
-        UnityEngine.Debug.Log("start");
-
         tmp.StartEngine();
 
+        tmp.WriteInput("git log --graph");
 
-        UnityEngine.Debug.Log("startdone");
-        tmp.WriteInput("git --help");
+        StringBuilder ttt = tmp.ReadOutput();
 
-        StringBuilder s = tmp.ReadOutput();
-
-
-        UnityEngine.Debug.Log(s.Length);
-        UnityEngine.Debug.Log(s.ToString());
+        while (ttt == null)
+        {
+            ttt = tmp.ReadOutput();
+        }
+        UnityEngine.Debug.Log("############" + ttt.Length);
+        UnityEngine.Debug.Log(ttt.ToString());
 
     }
 
