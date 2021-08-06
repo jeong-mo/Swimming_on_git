@@ -6,7 +6,7 @@ using UnityEngine;
 public struct Information
 {
     public string title;
-    public int people;
+    public string[] people;
 }
 
 /// <summary>
@@ -59,7 +59,6 @@ public class IslandManager : MonoBehaviour
             Island newInformation = newIsland.GetComponent<Island>();
             newInformation.Init();
             newInformation.title.text = informations[i].title;
-            newInformation.LocateContributor(informations[i].people);
             islands.Add(newInformation);
         }
 
@@ -70,8 +69,8 @@ public class IslandManager : MonoBehaviour
         // 첫 섬은 중앙에 위치
         islands[0].transform.position = start.transform.position;
         islands[0].transform.localScale.Set(1, 1, 1);
-        islands[0].Init();
         islands[0].LocateContributor(informations[0].people);
+        islands[0].ApplyTarget();
 
         // 섬 위치 조정
         float degree = 360f / (islands.Count - 1);
@@ -80,8 +79,8 @@ public class IslandManager : MonoBehaviour
             // Y는 임시로 설정
             islands[i + 1].transform.position = new Vector3(start.transform.position.x + (Mathf.Cos(Mathf.Deg2Rad * (degree * i)) * distance), -13, start.transform.position.z + (Mathf.Sin(Mathf.Deg2Rad * (degree * i)) * distance));
             islands[i + 1].transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-            islands[i + 1].Init();
             islands[i + 1].LocateContributor(informations[i + 1].people);
+            islands[i + 1].ApplyTarget();
         }
 
         // 뒤로 가기 버튼 숨기기
@@ -98,8 +97,11 @@ public class IslandManager : MonoBehaviour
 
         // 섬의 위치 조정
         foreach (Island island in islands)
+        {
             island.MoveIsland(false);
-    
+            island.ActiveAllContributorName(false);
+        }
+
         back.SetActive(false);
     }
 
@@ -112,8 +114,15 @@ public class IslandManager : MonoBehaviour
             // 섬 이름 숨김
             island.title.gameObject.SetActive(false);
 
+            // 선택한 섬이 아니면 가라앉음
             if (island != selected)
+            {
                 island.MoveIsland(true);
+                island.ActiveAllContributorName(false);
+                continue;
+            }
+
+            island.ActiveAllContributorName(true);
         }
         
         targetPosition = selected.target;

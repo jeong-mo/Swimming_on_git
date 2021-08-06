@@ -826,22 +826,27 @@ MonoBehaviour:
   mainCamera: {fileID: 2588576675600781428}
   back: {fileID: 2588576675654489095}
   initSize: 80
-  finalSize: 30
+  finalSize: 20
   informations:
   - title: Master
-    people: 5
+    people:
+    - John
+    - Sandy
+    - Bryan
+    - Eagle
+    - Widow
   - title: Branch1
-    people: 3
+    people: []
   - title: Branch2
-    people: 2
+    people: []
   - title: Branch3
-    people: 7
+    people: []
   - title: Branch4
-    people: 4
+    people: []
   - title: Branch5
-    people: 3
+    people: []
   - title: Branch6
-    people: 2
+    people: []
   islandPrefab: {fileID: 4880629842233302847, guid: 063a5ac1903fd904e8eca64d5e2a2297,
     type: 3}
   distance: 90
