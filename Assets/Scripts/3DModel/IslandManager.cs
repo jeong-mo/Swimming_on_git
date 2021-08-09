@@ -7,6 +7,14 @@ public struct Information
 {
     public string title;
     public string[] people;
+    public Commit[] commits;
+}
+
+[System.Serializable]
+public struct Commit
+{
+    public string title;
+    public string message;
 }
 
 /// <summary>
@@ -59,6 +67,7 @@ public class IslandManager : MonoBehaviour
             Island newInformation = newIsland.GetComponent<Island>();
             newInformation.Init();
             newInformation.title.text = informations[i].title;
+            newInformation.ApplyCloudInformation(informations[i].commits);
             islands.Add(newInformation);
         }
 
@@ -95,11 +104,12 @@ public class IslandManager : MonoBehaviour
 
         targetSize = initSize;
 
-        // 섬의 위치 조정
+        // 섬 상태 초기화
         foreach (Island island in islands)
         {
             island.MoveIsland(false);
             island.ActiveAllContributorName(false);
+            island.DeleteCloud();
         }
 
         back.SetActive(false);
@@ -122,7 +132,9 @@ public class IslandManager : MonoBehaviour
                 continue;
             }
 
+            // 선택한 섬
             island.ActiveAllContributorName(true);
+            island.MakeCloud();
         }
         
         targetPosition = selected.target;

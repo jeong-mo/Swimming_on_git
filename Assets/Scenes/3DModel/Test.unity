@@ -218,7 +218,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
 --- !u!20 &2588576675600781428
 Camera:
@@ -430,7 +430,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!108 &2588576675825438621
 Light:
@@ -574,7 +574,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2588576676255668000
 Transform:
@@ -588,7 +588,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2588576676255668001
 GameObject:
@@ -641,7 +641,7 @@ PrefabInstance:
     - target: {fileID: 9129267595288993018, guid: 0bc23aa066f1c5e478d1e6d2a85d95fd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9129267595288993018, guid: 0bc23aa066f1c5e478d1e6d2a85d95fd,
         type: 3}
@@ -724,7 +724,7 @@ RectTransform:
   - {fileID: 2588576677211813652}
   - {fileID: 2588576675654489094}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -826,7 +826,7 @@ MonoBehaviour:
   mainCamera: {fileID: 2588576675600781428}
   back: {fileID: 2588576675654489095}
   initSize: 80
-  finalSize: 20
+  finalSize: 80
   informations:
   - title: Master
     people:
@@ -835,18 +835,33 @@ MonoBehaviour:
     - Bryan
     - Eagle
     - Widow
+    commits:
+    - title: 1st Commit
+      message: 1st Message
+    - title: 2nd Commit
+      message: 2nd Message
+    - title: 3rd Commit
+      message: 3rd Message
+    - title: 4th Commit
+      message: 4th Message
   - title: Branch1
     people: []
+    commits: []
   - title: Branch2
     people: []
+    commits: []
   - title: Branch3
     people: []
+    commits: []
   - title: Branch4
     people: []
+    commits: []
   - title: Branch5
     people: []
+    commits: []
   - title: Branch6
     people: []
+    commits: []
   islandPrefab: {fileID: 4880629842233302847, guid: 063a5ac1903fd904e8eca64d5e2a2297,
     type: 3}
   distance: 90
@@ -863,7 +878,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2588576677118142061
 GameObject:
