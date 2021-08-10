@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 [System.Serializable]
@@ -37,7 +38,8 @@ public class IslandManager : MonoBehaviour
     [SerializeField] float finalSize;   // 카메라 최종 크기
     private float targetSize;           // 카메라 목표 크기
     
-    [SerializeField] Information[] informations;    // 섬 정보 리스트
+    private List<Information> informations;    // 섬 정보 리스트
+
     [SerializeField] GameObject islandPrefab;       // 섬 오브젝트 프리팹
     [SerializeField] float distance;                // 섬 사이의 거리
     [SerializeField] Transform start;               // 섬 시작 위치
@@ -46,6 +48,20 @@ public class IslandManager : MonoBehaviour
 
     private void Start()
     {
+        /* 임시로 데이터 생성
+        Repository repo = new Repository();
+        Branch[] branches = new Branch[5];
+        for(int i = 0; i < branches.Length; i++)
+        {
+            branches[i] = new Branch();
+            branches[i].title = (i + 1) + " of branch";
+            branches[i].author = new string[i + 2];
+            for (int j = 0; j < branches[i].author.Length; j++)
+                branches[i].author[j] = (j + 1) + " of author";
+        }
+        repo.branch = branches;
+        File.WriteAllText("D:\\UnityProject\\Capstone\\Swimming_on_git\\Assets\\Resources\\Test.json", JsonUtility.ToJson(repo)); */
+
         // 처음 카메라 각도 및 위치 설정
         initPosition = main.position;
         initRotation = main.rotation.eulerAngles;
@@ -55,11 +71,26 @@ public class IslandManager : MonoBehaviour
         targetRotation = initRotation;
 
         targetSize = initSize;
-        
+
+        // 데이터에서 섬 정보 불러오기
+        TextAsset jsonText = Resources.Load("Test") as TextAsset;
+        Repository repository = JsonUtility.FromJson<Repository>(jsonText.ToString());
+        informations = new List<Information>();
+        foreach(Branch branch in repository.branch)
+        {
+            Information newInformation = new Information
+            {
+                title = branch.title,
+                people = branch.author,
+                commits = new Commit[0]
+            };
+            informations.Add(newInformation);
+        }
+
         islands = new List<Island>();
 
         // 섬 스크립트 불러옴
-        for(int i = 0; i < informations.Length; i++)
+        for(int i = 0; i < informations.Count; i++)
         {
             GameObject newIsland = Instantiate(islandPrefab);
 
