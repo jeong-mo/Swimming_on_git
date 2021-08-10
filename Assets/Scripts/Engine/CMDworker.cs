@@ -18,21 +18,26 @@ public class CMDworker : MonoBehaviour
         engine.ReadOutput();
     }
 
+    /// <summary>
+    /// 많은 개선이 필요할 것으로 보임
+    /// </summary>
+    /// <param name="s"></param>
     public static void input(string s)
     {
         engine.WriteInput(s);
     }
 
-    public static string output()
+    public static void output()
     {
         StringBuilder builder = engine.ReadOutput();
 
-        while(builder == null)
+        while(engine.CheckOutput())
         {
             builder = engine.ReadOutput();
         }
 
-        return engine.ReadOutput().ToString();
+        if(builder != null)
+            InputManager.OutputControl(builder.ToString());
     }
 
 

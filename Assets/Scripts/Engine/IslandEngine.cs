@@ -46,7 +46,7 @@ public class IslandEngine
     /// </summary>
     private void SetInfo()
     {
-        bashInfo.FileName = "C:\\Program Files\\Git\\bin\\bash.exe";
+        bashInfo.FileName = "C:\\Program Files (x86)\\Git\\bin\\bash.exe";
         bashInfo.UseShellExecute = false;
         bashInfo.CreateNoWindow = true;
 
@@ -80,9 +80,10 @@ public class IslandEngine
     /// <param name="input"> 깃 배쉬에 입력할 명령어를 그대로 넣을 것</param>
     public void WriteInput(string input)
     {
+        outputString.Clear();
         writer = bash.StandardInput;
         writer.WriteLine(input);
-        writer.Close();
+        writer.Flush();
     }
 
     /// <summary>
@@ -96,7 +97,10 @@ public class IslandEngine
     {
         // 이거 호출이 너무 빨라서 아무것도 없는게 감
         if (CheckOutput())
+        {
+            isOutput = false;
             return outputString;
+        }
         else
             return null;
     }
@@ -106,6 +110,7 @@ public class IslandEngine
     /// </summary>
     public void StopEngine()
     {
+        writer.Close();
         bash.Close();
     }
 
@@ -132,7 +137,8 @@ public class IslandEngine
         if (!String.IsNullOrEmpty(outLine.Data))
         {
             // Add the text to the collected output.
-            outputString.Append(outLine.Data);
+            //UnityEngine.Debug.Log(outLine.Data);
+            outputString.AppendLine(outLine.Data);    
             isOutput = true;
         }
     }
