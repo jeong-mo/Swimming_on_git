@@ -13,16 +13,26 @@ public class InputManager : MonoBehaviour
     [SerializeField] Text output;           // 출력할 텍스트
     [SerializeField] ScrollRect scroll;     // 출력 스크롤
 
+    private static Text cmdText;   // 출력 텍스트
+    private static List<GameObject> outputList; // 출력 문장 리스트
 
-    public static Text output_text;
+    public static GameObject outputContent; // 출력 문장을 붙일 콘텐츠
     public static bool isUpdateScroll = false;
 
     private void Start()
     {
         // 처음에 출력 텍스트 초기화
-        output.text = "";
+        // output.text = "";
+        // output_text = GameObject.Find("Log").GetComponent<Text>();
 
-        output_text = GameObject.Find("Log").GetComponent<Text>();
+        cmdText = Resources.Load<GameObject>("CMD/Log").GetComponent<Text>();
+        outputContent = GameObject.Find("Content");
+
+        // 출력 문장 모두 초기화
+        for(int i = 0; i < outputContent.transform.childCount; i++)
+            Destroy(outputContent.transform.GetChild(i));
+
+        outputList = new List<GameObject>();
     }
 
     private void Update()
@@ -41,10 +51,17 @@ public class InputManager : MonoBehaviour
 
     public static void OutputControl(string s)
     {
-        output_text.text += s;
+        // 입력받은 텍스트 추가
+        GameObject newText = Instantiate(cmdText.gameObject);
+        newText.GetComponent<Text>().text = s;
+        newText.transform.parent = outputContent.transform;
+
+        // 문장 리스트에 추가
+        outputList.Add(newText);
+
+        //output_text.text += s;
         isUpdateScroll = true;
     }
-
 
     // 입력 텍스트 처리
     public void ConductInput()
@@ -60,9 +77,9 @@ public class InputManager : MonoBehaviour
         UnityEngine.Debug.Log(input.text);
 
         // 입력 텍스트 출력에 추가
-        output.text += '\n';
-        output.text += input.text;
-        output.text += '\n';
+        //output.text += '\n';
+        //output.text += input.text;
+        //output.text += '\n';
         // 입력 텍스트 초기화
         input.text = "";
 

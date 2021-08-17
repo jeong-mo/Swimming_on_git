@@ -46,12 +46,14 @@ public class IslandEngine
     /// </summary>
     private void SetInfo()
     {
-        bashInfo.FileName = "C:\\Program Files (x86)\\Git\\bin\\bash.exe";
+        //bashInfo.FileName = "C:\\Program Files (x86)\\Git\\bin\\bash.exe";
+        bashInfo.FileName = "C:\\Program Files\\Git\\bin\\bash.exe";
         bashInfo.UseShellExecute = false;
         bashInfo.CreateNoWindow = true;
 
         // 테스트용 경로임 삭제할 것
-        bashInfo.WorkingDirectory = "C:\\Users\\jay09\\Desktop\\Swimming_on_git";
+        //bashInfo.WorkingDirectory = "C:\\Users\\jay09\\Desktop\\Swimming_on_git";
+        bashInfo.WorkingDirectory = "D:\\UnityProject\\Capstone\\Swimming_on_git";
 
         bashInfo.RedirectStandardOutput = true;
         outputString = new StringBuilder();
