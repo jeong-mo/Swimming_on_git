@@ -1,5 +1,3 @@
-﻿
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +21,31 @@ public class IslandEngine
     private Boolean isOutput = false;
 
 
+    public string FindGitPath()
+    {
+        string a = Environment.GetEnvironmentVariable("path");
+        string gitPath = "";
+
+        foreach (string e in a.Split(';'))
+        {
+            if (e.Contains("Git\\cmd") || e.Contains("git\\cmd"))
+            {
+                // 여러개가 나오는 경우는 아직 모르는 레후;;
+                string[] contents = e.Split('\\');
+                foreach (string k in contents)
+                {
+                    gitPath += k;
+                    gitPath += "\\\\";
+                    if (k.ToLower() == "git")
+                        break;
+                }
+                gitPath += "bin\\\\";
+                gitPath += "bash.exe";
+
+            }
+        }
+        return gitPath;
+    }
     /// <summary>
     /// 배쉬 위치가 예상한 곳이 아니라면 실행할 깃 배쉬의 위치를 입력
     /// </summary>
@@ -48,7 +71,9 @@ public class IslandEngine
     /// </summary>
     private void SetInfo()
     {
-        bashInfo.FileName = "C:\\Program Files\\Git\\bin\\bash.exe";
+        //bashInfo.FileName = "C:\\Program Files (x86)\\Git\\bin\\bash.exe";
+        UnityEngine.Debug.Log(FindGitPath());
+        bashInfo.FileName = FindGitPath();
         bashInfo.UseShellExecute = false;
         bashInfo.CreateNoWindow = true;
 
@@ -152,5 +177,4 @@ public class IslandEngine
     {
         return bashInfo.WorkingDirectory;
     }
-
 }

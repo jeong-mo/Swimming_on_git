@@ -121,6 +121,91 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &262775754 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9129267595288993018, guid: 0bc23aa066f1c5e478d1e6d2a85d95fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 2588576676471938250}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &958908936
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 958908937}
+  - component: {fileID: 958908939}
+  - component: {fileID: 958908938}
+  m_Layer: 0
+  m_Name: Bottom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &958908937
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958908936}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -250, z: -114}
+  m_LocalScale: {x: 1000, y: 500, z: 1}
+  m_Children: []
+  m_Father: {fileID: 262775754}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &958908938
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958908936}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 0d337a70f9e175348909eb917056c239, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &958908939
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958908936}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &2588576675600781427
 Transform:
   m_ObjectHideFlags: 0
@@ -133,7 +218,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
 --- !u!20 &2588576675600781428
 Camera:
@@ -345,7 +430,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!108 &2588576675825438621
 Light:
@@ -489,7 +574,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2588576676255668000
 Transform:
@@ -503,7 +588,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2588576676255668001
 GameObject:
@@ -556,7 +641,7 @@ PrefabInstance:
     - target: {fileID: 9129267595288993018, guid: 0bc23aa066f1c5e478d1e6d2a85d95fd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9129267595288993018, guid: 0bc23aa066f1c5e478d1e6d2a85d95fd,
         type: 3}
@@ -639,7 +724,7 @@ RectTransform:
   - {fileID: 2588576677211813652}
   - {fileID: 2588576675654489094}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -741,22 +826,42 @@ MonoBehaviour:
   mainCamera: {fileID: 2588576675600781428}
   back: {fileID: 2588576675654489095}
   initSize: 80
-  finalSize: 30
+  finalSize: 80
   informations:
   - title: Master
-    people: 5
+    people:
+    - John
+    - Sandy
+    - Bryan
+    - Eagle
+    - Widow
+    commits:
+    - title: 1st Commit
+      message: 1st Message
+    - title: 2nd Commit
+      message: 2nd Message
+    - title: 3rd Commit
+      message: 3rd Message
+    - title: 4th Commit
+      message: 4th Message
   - title: Branch1
-    people: 3
+    people: []
+    commits: []
   - title: Branch2
-    people: 2
+    people: []
+    commits: []
   - title: Branch3
-    people: 7
+    people: []
+    commits: []
   - title: Branch4
-    people: 4
+    people: []
+    commits: []
   - title: Branch5
-    people: 3
+    people: []
+    commits: []
   - title: Branch6
-    people: 2
+    people: []
+    commits: []
   islandPrefab: {fileID: 4880629842233302847, guid: 063a5ac1903fd904e8eca64d5e2a2297,
     type: 3}
   distance: 90
@@ -773,7 +878,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2588576677118142061
 GameObject:
