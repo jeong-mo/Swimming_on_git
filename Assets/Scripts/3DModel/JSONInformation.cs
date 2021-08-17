@@ -12,5 +12,11 @@ public class Repository
 public class Branch
 {
     public string title;
-    public string[] author;
+    public Author contributor;
+}
+
+[System.Serializable]
+public class Author
+{
+    public string[] name;
 }

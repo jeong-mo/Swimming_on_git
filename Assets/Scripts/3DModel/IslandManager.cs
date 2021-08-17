@@ -81,7 +81,7 @@ public class IslandManager : MonoBehaviour
             Information newInformation = new Information
             {
                 title = branch.title,
-                people = branch.author,
+                people = branch.contributor.name,
                 commits = new Commit[0]
             };
             informations.Add(newInformation);
