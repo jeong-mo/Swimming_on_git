@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
@@ -80,9 +82,10 @@ public class IslandEngine
     /// <param name="input"> 깃 배쉬에 입력할 명령어를 그대로 넣을 것</param>
     public void WriteInput(string input)
     {
+        outputString.Clear();
         writer = bash.StandardInput;
         writer.WriteLine(input);
-        writer.Close();
+        writer.Flush();
     }
 
     /// <summary>
@@ -97,6 +100,7 @@ public class IslandEngine
         // 이거 호출이 너무 빨라서 아무것도 없는게 감
         if (CheckOutput())
         {
+            isOutput = false;
             return outputString;
         }
         else
@@ -108,6 +112,7 @@ public class IslandEngine
     /// </summary>
     public void StopEngine()
     {
+        writer.Close();
         bash.Close();
     }
 
@@ -134,9 +139,18 @@ public class IslandEngine
         if (!String.IsNullOrEmpty(outLine.Data))
         {
             // Add the text to the collected output.
+            //UnityEngine.Debug.Log(outLine.Data);
             outputString.AppendLine(outLine.Data);
             isOutput = true;
         }
+    }
+
+    /// <summary>
+    /// 현재 저장소의 파일상 위치를 return한다
+    /// </summary>
+    public string ShowWorkingDirectory()
+    {
+        return bashInfo.WorkingDirectory;
     }
 
 }
