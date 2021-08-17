@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
@@ -46,7 +46,6 @@ public class IslandEngine
         }
         return gitPath;
     }
-
     /// <summary>
     /// 배쉬 위치가 예상한 곳이 아니라면 실행할 깃 배쉬의 위치를 입력
     /// </summary>
@@ -79,8 +78,7 @@ public class IslandEngine
         bashInfo.CreateNoWindow = true;
 
         // 테스트용 경로임 삭제할 것
-        //bashInfo.WorkingDirectory = "C:\\Users\\jay09\\Desktop\\Swimming_on_git";
-        bashInfo.WorkingDirectory = "D:\\UnityProject\\Capstone\\Swimming_on_git";
+        bashInfo.WorkingDirectory = "C:\\Users\\crusi\\Documents\\GitHub\\Swimming_on_git";
 
         bashInfo.RedirectStandardOutput = true;
         outputString = new StringBuilder();
@@ -172,4 +170,11 @@ public class IslandEngine
         }
     }
 
+    /// <summary>
+    /// 현재 저장소의 파일상 위치를 return한다
+    /// </summary>
+    public string ShowWorkingDirectory()
+    {
+        return bashInfo.WorkingDirectory;
+    }
 }
