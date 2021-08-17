@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
@@ -21,6 +21,31 @@ public class IslandEngine
     private Boolean isOutput = false;
 
 
+    public string FindGitPath()
+    {
+        string a = Environment.GetEnvironmentVariable("path");
+        string gitPath = "";
+
+        foreach (string e in a.Split(';'))
+        {
+            if (e.Contains("Git\\cmd") || e.Contains("git\\cmd"))
+            {
+                // 여러개가 나오는 경우는 아직 모르는 레후;;
+                string[] contents = e.Split('\\');
+                foreach (string k in contents)
+                {
+                    gitPath += k;
+                    gitPath += "\\\\";
+                    if (k.ToLower() == "git")
+                        break;
+                }
+                gitPath += "bin\\\\";
+                gitPath += "bash.exe";
+
+            }
+        }
+        return gitPath;
+    }
     /// <summary>
     /// 배쉬 위치가 예상한 곳이 아니라면 실행할 깃 배쉬의 위치를 입력
     /// </summary>
@@ -47,13 +72,13 @@ public class IslandEngine
     private void SetInfo()
     {
         //bashInfo.FileName = "C:\\Program Files (x86)\\Git\\bin\\bash.exe";
-        bashInfo.FileName = "C:\\Program Files\\Git\\bin\\bash.exe";
+        UnityEngine.Debug.Log(FindGitPath());
+        bashInfo.FileName = FindGitPath();
         bashInfo.UseShellExecute = false;
         bashInfo.CreateNoWindow = true;
 
         // 테스트용 경로임 삭제할 것
-        //bashInfo.WorkingDirectory = "C:\\Users\\jay09\\Desktop\\Swimming_on_git";
-        bashInfo.WorkingDirectory = "D:\\UnityProject\\Capstone\\Swimming_on_git";
+        bashInfo.WorkingDirectory = "C:\\Users\\crusi\\Documents\\GitHub\\Swimming_on_git";
 
         bashInfo.RedirectStandardOutput = true;
         outputString = new StringBuilder();
@@ -140,9 +165,16 @@ public class IslandEngine
         {
             // Add the text to the collected output.
             //UnityEngine.Debug.Log(outLine.Data);
-            outputString.AppendLine(outLine.Data);    
+            outputString.AppendLine(outLine.Data);
             isOutput = true;
         }
     }
 
+    /// <summary>
+    /// 현재 저장소의 파일상 위치를 return한다
+    /// </summary>
+    public string ShowWorkingDirectory()
+    {
+        return bashInfo.WorkingDirectory;
+    }
 }
