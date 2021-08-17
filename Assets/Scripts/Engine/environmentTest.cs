@@ -11,11 +11,12 @@ public class environmentTest : MonoBehaviour
         string a = Environment.GetEnvironmentVariable("path");
         IDictionary b = Environment.GetEnvironmentVariables();
 
+        UnityEngine.Debug.Log(a);
         //UnityEngine.Debug.Log(a.Split(';'));
         foreach (string e in a.Split(';'))
         {
             //UnityEngine.Debug.Log(e);
-            if (e.Contains("git"))
+            if (e.Contains("Git") || e.Contains("git"))
             {
                 UnityEngine.Debug.Log(e);
 
