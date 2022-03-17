@@ -88,7 +88,6 @@ public class IslandEngine
 
         bash.StartInfo = bashInfo;
         bash.OutputDataReceived += OutputHandler;
-
     }
 
     /// <summary>

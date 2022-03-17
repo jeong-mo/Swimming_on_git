@@ -38,7 +38,7 @@ public class IslandManager : MonoBehaviour
     [SerializeField] float finalSize;   // 카메라 최종 크기
     private float targetSize;           // 카메라 목표 크기
     
-    private List<Information> informations;    // 섬 정보 리스트
+    public List<Information> informations;    // 섬 정보 리스트
 
     [SerializeField] GameObject islandPrefab;       // 섬 오브젝트 프리팹
     [SerializeField] float distance;                // 섬 사이의 거리
@@ -81,7 +81,7 @@ public class IslandManager : MonoBehaviour
             Information newInformation = new Information
             {
                 title = branch.title,
-                people = branch.contributor.name,
+                people = branch.author,
                 commits = new Commit[0]
             };
             informations.Add(newInformation);

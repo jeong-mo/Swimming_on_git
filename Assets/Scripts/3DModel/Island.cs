@@ -110,7 +110,11 @@ public class Island : MonoBehaviour
     // 사람 수를 매니저에게 받고 배치
     public void LocateContributor(string[] authors)
     {
-        int count = authors.Length;
+        int count = 0;
+
+        // NULL 처리
+        if (authors != null)
+            count = authors.Length;
 
         // 빈 자리 체크 배열
         bool[] empty = new bool[transforms.Count];
