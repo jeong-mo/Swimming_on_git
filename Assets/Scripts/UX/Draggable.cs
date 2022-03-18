@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class Draggable : MonoBehaviour
 {
-    [SerializeField] Material normal;
+    [SerializeField] Material highlight;
     [SerializeField] Material stealth;
 
     private MeshRenderer current;
@@ -38,7 +38,7 @@ public class Draggable : MonoBehaviour
     private void OnMouseDown()
     {
         // 보이게 설정
-        current.material = normal;
+        current.material = highlight;
     }
 
     private void OnMouseDrag()
