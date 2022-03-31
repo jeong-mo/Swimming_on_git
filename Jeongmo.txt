@@ -1,7 +1,6 @@
 
 jeongmo 
 
-commit 
-push 
+KJM branch 생성후
 
 test중
